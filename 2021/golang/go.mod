@@ -1,3 +1,3 @@
-module example/hello
+module aoc
 
 go 1.17
