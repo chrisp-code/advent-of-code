@@ -1,5 +1,4 @@
 use crate::common::{self, Solution};
-use std::collections::HashMap;
 
 pub struct Day03 {}
 
@@ -21,49 +20,54 @@ fn get_column(report: &Vec<Vec<u32>>, column: usize) -> Vec<u32> {
     .collect();
 }
 
-fn get_frequencies(line: &Vec<u32>) -> [u32; 2] {
-  let frequencies = line
-    .into_iter()
-    .fold(HashMap::<u32, usize>::new(), |mut m, x| {
-      *m.entry(*x).or_default() += 1;
-      m
-    });
-
-  let min = frequencies
-    .clone()
-    .into_iter()
-    .min_by_key(|(_, v)| *v)
-    .map(|(k, _)| k)
-    .unwrap();
-
-  let max = frequencies
-    .clone()
-    .into_iter()
-    .max_by_key(|(_, v)| *v)
-    .map(|(k, _)| k)
-    .unwrap();
-
-  return [min, max];
-}
-
 fn get_most_common(line: &Vec<u32>) -> u32 {
-  let [min, max] = get_frequencies(line);
+  let mut occurrences: [u32; 2] = [0, 0];
 
-  if min == max {
-    return 1;
+  for &val in line.into_iter() {
+    if val == 0 {
+      occurrences[0] += 1;
+    } else {
+      occurrences[1] += 1;
+    }
   }
 
-  return max;
+  let mut max = 0;
+  let mut most_common = 0;
+
+  for i in 0..occurrences.len() {
+    let occurrence = occurrences[i];
+    if occurrence > max || (occurrence == max && i == 1) {
+      max = occurrence;
+      most_common = i as u32;
+    }
+  }
+
+  return most_common;
 }
 
 fn get_least_common(line: &Vec<u32>) -> u32 {
-  let [min, max] = get_frequencies(line);
+  let mut occurrences: [u32; 2] = [0, 0];
 
-  if min == max {
-    return 0;
+  for &val in line.into_iter() {
+    if val == 0 {
+      occurrences[0] += 1;
+    } else {
+      occurrences[1] += 1;
+    }
   }
 
-  return min;
+  let mut min = 4294967295;
+  let mut least_common = 0;
+
+  for i in 0..occurrences.len() {
+    let occurrence = occurrences[i];
+    if occurrence < min || (occurrence == min && i == 0) {
+      min = occurrence;
+      least_common = i as u32;
+    }
+  }
+
+  return least_common;
 }
 
 fn filter_to_common(
@@ -132,11 +136,6 @@ impl Solution for Day03 {
 
     let oxygen_generator_rating = u32::from_str_radix(&oxygen, 2).unwrap();
     let co2_scrubber_rating = u32::from_str_radix(&co2, 2).unwrap();
-
-    println!(
-      "oxygen: {}, co2: {}, oxygenGeneratorRating: {}, CO2ScrubberRating: {}",
-      oxygen, co2, oxygen_generator_rating, co2_scrubber_rating
-    );
 
     let life_support_rating = oxygen_generator_rating * co2_scrubber_rating;
 
