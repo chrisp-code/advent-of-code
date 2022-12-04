@@ -1,13 +1,9 @@
-// import type { Solutions } from "./types/solutions.type.ts";
-// import { y2022 } from "./2022/index.ts";
-
 import { DaySolution } from "./types/day-solution.type.ts";
 
 function noop(..._args: unknown[]) {
     return "";
 }
 
-// Learn more at https://deno.land/manual/examples/module_metadata#concepts
 if (import.meta.main) {
     const [year, day] = Deno.args.map((val) => parseInt(val, 10));
 
