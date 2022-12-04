@@ -20,21 +20,21 @@ async function getInput(year: number, day: number): Promise<string[]> {
 
 const priority = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-export default {
-    "3": {
-        async partA(year: number, day: number): Promise<string> {
-            return (await getInput(year, day))
-                .flatMap((contents) => intersection(...split([...contents], 2)))
-                .reduce((total, item) => total + priority.indexOf(item), 0)
-                .toString();
-        },
-        async partB(year: number, day: number): Promise<string> {
-            return chunk(await getInput(year, day), 3)
-                .flatMap((group) =>
-                    intersection(...group.map((individual) => [...individual]))
-                )
-                .reduce((total, item) => total + priority.indexOf(item), 0)
-                .toString();
-        },
+export const day03 = {
+    async partA(year: number, day: number): Promise<string> {
+        return (await getInput(year, day))
+            .flatMap((contents) => intersection(...split([...contents], 2)))
+            .reduce((total, item) => total + priority.indexOf(item), 0)
+            .toString();
+    },
+    async partB(year: number, day: number): Promise<string> {
+        return chunk(await getInput(year, day), 3)
+            .flatMap((group) =>
+                intersection(...group.map((individual) => [...individual]))
+            )
+            .reduce((total, item) => total + priority.indexOf(item), 0)
+            .toString();
     },
 };
+
+export default day03;

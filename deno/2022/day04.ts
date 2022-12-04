@@ -45,25 +45,24 @@ function hasOverlap(
     return false;
 }
 
-export default {
-    "4": {
-        async partA(year: number, day: number): Promise<string> {
-            return (await getRanges(year, day))
-                .reduce(
-                    (total, ranges) =>
-                        total + (hasEntireOverlap(...ranges) ? 1 : 0),
-                    0
-                )
-                .toString();
-        },
-        async partB(year: number, day: number): Promise<string> {
-            return (await getRanges(year, day))
-                .reduce(
-                    (total, ranges) =>
-                        total + (hasAnyOverlap(...ranges) ? 1 : 0),
-                    0
-                )
-                .toString();
-        },
+export const day04 = {
+    async partA(year: number, day: number): Promise<string> {
+        return (await getRanges(year, day))
+            .reduce(
+                (total, ranges) =>
+                    total + (hasEntireOverlap(...ranges) ? 1 : 0),
+                0
+            )
+            .toString();
+    },
+    async partB(year: number, day: number): Promise<string> {
+        return (await getRanges(year, day))
+            .reduce(
+                (total, ranges) => total + (hasAnyOverlap(...ranges) ? 1 : 0),
+                0
+            )
+            .toString();
     },
 };
+
+export default day04;

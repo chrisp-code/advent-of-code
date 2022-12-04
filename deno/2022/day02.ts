@@ -20,43 +20,43 @@ const gameRules: Record<string, number> = {
     "C X": 1 + 6, // win
 };
 
-export default {
-    "2": {
-        async partA(year: number, day: number): Promise<string> {
-            return (await getRounds(year, day))
-                .reduce((total, round) => total + (gameRules[round] ?? 0), 0)
-                .toString();
-        },
-        async partB(year: number, day: number): Promise<string> {
-            const conversion: Record<string, Record<string, string>> = {
-                // lose
-                X: {
-                    A: "Z",
-                    B: "X",
-                    C: "Y",
-                },
-                // draw
-                Y: {
-                    A: "X",
-                    B: "Y",
-                    C: "Z",
-                },
-                // win
-                Z: {
-                    A: "Y",
-                    B: "Z",
-                    C: "X",
-                },
-            };
+export const day02 = {
+    async partA(year: number, day: number): Promise<string> {
+        return (await getRounds(year, day))
+            .reduce((total, round) => total + (gameRules[round] ?? 0), 0)
+            .toString();
+    },
+    async partB(year: number, day: number): Promise<string> {
+        const conversion: Record<string, Record<string, string>> = {
+            // lose
+            X: {
+                A: "Z",
+                B: "X",
+                C: "Y",
+            },
+            // draw
+            Y: {
+                A: "X",
+                B: "Y",
+                C: "Z",
+            },
+            // win
+            Z: {
+                A: "Y",
+                B: "Z",
+                C: "X",
+            },
+        };
 
-            return (await getRounds(year, day))
-                .map((round) => round.split(" "))
-                .reduce(
-                    (total, [opp, outcome]) =>
-                        total + gameRules[`${opp} ${conversion[outcome][opp]}`],
-                    0
-                )
-                .toString();
-        },
+        return (await getRounds(year, day))
+            .map((round) => round.split(" "))
+            .reduce(
+                (total, [opp, outcome]) =>
+                    total + gameRules[`${opp} ${conversion[outcome][opp]}`],
+                0
+            )
+            .toString();
     },
 };
+
+export default day02;
