@@ -29,9 +29,7 @@ func ReadLines(year string, day string) ([]string, error) {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		line := scanner.Text()
-		if line != "" {
-			lines = append(lines, scanner.Text())
-		}
+		lines = append(lines, line)
 	}
 
 	if err := scanner.Err(); err != nil {
@@ -49,7 +47,10 @@ func ReadLinesInt(year string, day string) ([]int, error) {
 
 	values := make([]int, 0)
 	for i := 0; i < len(lines); i++ {
-		values = append(values, ToInt(lines[i]))
+		line := lines[i]
+		if line != "" {
+			values = append(values, ToInt(line))
+		}
 	}
 
 	return values, err

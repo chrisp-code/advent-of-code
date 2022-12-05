@@ -9,16 +9,16 @@ if (import.meta.main) {
 
     const solution: DaySolution = await import(
         `./${year}/day${day.toString().padStart(2, "0")}.ts`
-    ).catch(() => {
-        console.error(
-            `File "./${year}/day${day
-                .toString()
-                .padStart(2, "0")}.ts" not found`
-        );
-        Deno.exit(1);
-    });
-
-    console.log(solution);
+    )
+        .then((module) => module.default)
+        .catch(() => {
+            console.error(
+                `File "./${year}/day${day
+                    .toString()
+                    .padStart(2, "0")}.ts" not found`
+            );
+            Deno.exit(1);
+        });
 
     console.log(
         `Year ${year}, Day ${day}, Part A: ${await (solution?.partA ?? noop)(
