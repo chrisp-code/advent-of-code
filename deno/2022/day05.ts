@@ -1,4 +1,4 @@
-import { readInput, readInputLines } from "../utils/read-input.ts";
+import { readInput } from "../utils/read-input.ts";
 
 type SupplyStacks = {
     crates: string[][];
